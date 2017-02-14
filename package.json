@@ -1,0 +1,49 @@
+{
+  "name": "ag-grid-api",
+  "version": "0.0.1",
+  "description": "Helper utility for ag-grid-react api",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rm -rf dist",
+    "build": "babel --copy-files --out-dir dist src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielpetrov/ag-grid-api.git"
+  },
+  "keywords": [
+    "React",
+    "ag-grid",
+    "ag-grid-api",
+    "HOC"
+  ],
+  "author": "Daniel Petrov <danielpetrov222@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielpetrov/ag-grid-api/issues"
+  },
+  "files": [
+    "dist",
+    "Readme.md"
+  ],
+  "babel": {
+    "presets": [
+      "react",
+      "es2015",
+      "stage-1"
+    ]
+  },
+  "homepage": "https://github.com/danielpetrov/ag-grid-api#readme",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.17.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-1": "^6.16.0"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  }
+}
