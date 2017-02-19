@@ -4,8 +4,9 @@
 
 ### How To Use
 ````
-By default AgGridAPI-HOC will pass an object to your wrapped Component, called agGridApi and It will contain all the api functions,
-plus isGridReady property (api.params.isGridReady) and gridParams (api.params) property and also onGridReady callback.
+By default AgGridApi-HOC will pass props to your wrapped Component for all the api functions,
+plus isGridReady property (api.params.isGridReady) and gridParams (api.params) property and also onGridReady callback
+which you should pass down to AgGridReact component in order to use the other functions.
 ````
 ````
 To use it first you have to pass down the onGridReady callback to AgGridReact component provided from ag-grid-react.
@@ -14,10 +15,16 @@ You can change that from options, setting log property to true. Then you will ge
 to call an api functions if the grid is not ready.
 ````
 
+
+### Ag grid options
 ````
-Code sample...
+As a second parameter AgGridApi-HOC expects an options object which contains three properties.
+1. log - Boolean. If true will log on console in some cases (default is false)
+2. flatten - Boolean. If false will pass all agGridApi as separate props. If true will pass an agGridApi prop
+of type object which will contain all the props. (default is true)
+3. apiFunctions - Array of strings. AgGridApi-HOC will pass down only the listed agGridApiFunctions. (default are all functions)
 ````
 
 ````
-Ag grid opitons...
+Code sample...
 ````

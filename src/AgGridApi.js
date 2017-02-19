@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 
-const AG_GRID_API_FUNCTIONS = [
+const ALL_AG_GRID_API_FUNCTIONS = [
     'exportDataAsCsv',
     'selectAll',
     'deselectAll'
@@ -9,7 +9,7 @@ const AG_GRID_API_FUNCTIONS = [
 const DEFAULT_OPTIONS = {
     log: false,
     flatten: true,
-    apiFunctions: AG_GRID_API_FUNCTIONS
+    apiFunctions: ALL_AG_GRID_API_FUNCTIONS
 }
 
 export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
@@ -75,7 +75,7 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
                 }
             } else {
                 decoratedComponentProps = {
-                    agGridApiProps
+                    agGridApi: agGridApiProps
                 }
             }
 
