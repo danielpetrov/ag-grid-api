@@ -6,7 +6,13 @@ const AG_GRID_API_FUNCTIONS = [
     'deselectAll'
 ]
 
-export const AgGridApi = (DecoratedComponent, passedDownFunctions = AG_GRID_API_FUNCTIONS) => {
+const DEFAULT_OPTIONS = {
+    log: false,
+    flatten: true,
+    apiFunctions: AG_GRID_API_FUNCTIONS
+}
+
+export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
     class AgGridApi extends Component {
         constructor() {
             super()
@@ -21,7 +27,9 @@ export const AgGridApi = (DecoratedComponent, passedDownFunctions = AG_GRID_API_
             const { isGridReady, gridParams } = this.state
 
             if (isGridReady) {
-                callback.call(gridParams.api, options)
+               return callback.call(gridParams.api, options)
+            } else if (options.log) {
+                console.warn('Ag grid has not loaded yet')
             }
         }
 
@@ -48,19 +56,33 @@ export const AgGridApi = (DecoratedComponent, passedDownFunctions = AG_GRID_API_
 
         render() {
             const { isGridReady, gridParams } = this.state
-            const agGridApiFunctionPassedDown = passedDownFunctions.reduce((acc, value) => {
+            const agGridApiFunctionPassedDown = options.apiFunctions.reduce((acc, value) => {
                 acc[value] = this[value]
 
                 return acc
             }, {})
+            let decoratedComponentProps
+            const agGridApiProps = {
+                isGridReady,
+                gridParams,
+                onGridReady: this.onGridReady,
+                agGridApiFunctionPassedDown
+            }
+
+            if (options.flatten) {
+                decoratedComponentProps = {
+                    ...agGridApiProps
+                }
+            } else {
+                decoratedComponentProps = {
+                    agGridApiProps
+                }
+            }
 
             return (
                 <DecoratedComponent
                     {...this.props}
-                    isGridReady={isGridReady}
-                    gridParams={gridParams}
-                    onGridReady={this.onGridReady}
-                    {...agGridApiFunctionPassedDown}
+                    {...decoratedComponentProps}
                 />
             )
         }
