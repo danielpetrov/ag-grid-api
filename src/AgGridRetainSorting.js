@@ -4,6 +4,8 @@ import { callWrapperComponentOnGridReady } from './utils'
 export const AgGridRetainSorting = DecoratedComponent => {
     class AgGridRetainSorting extends Component {
         constructor() {
+            super ()
+
             this.gridParams = {
                 api: {
                     getSortModel: () => {},

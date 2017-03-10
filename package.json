@@ -1,11 +1,11 @@
 {
   "name": "ag-grid-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Helper utility for ag-grid-react api",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "rm -rf dist",
+    "prebuild": "rimraf dist",
     "build": "babel --copy-files --out-dir dist src",
     "generate-docs": "jsdoc -c jsdoc-config.json --debug"
   },
@@ -43,7 +43,8 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-1": "^6.16.0",
     "docdash": "^0.4.0",
-    "jsdoc": "^3.4.3"
+    "jsdoc": "^3.4.3",
+    "rimraf": "^2.6.1"
   },
   "dependencies": {
     "react": "^15.4.2"
