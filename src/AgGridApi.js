@@ -488,14 +488,9 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         }
         /* Sort and Filter end */
 
+        /* Groups start */
         /**
-         * @function
-         * */
-        onGroupExpandedOrCollapsed = () => {
-            return this.afterGridReady(this.gridParamsFunctionSelector('onGroupExpandedOrCollapsed'))
-        }
-
-        /**
+         * Expand all groups.
          * @function
          * */
         expandAll = () => {
@@ -503,6 +498,7 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         }
 
         /**
+         * Collapse all groups.
          * @function
          * */
         collapseAll = () => {
@@ -510,48 +506,174 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         }
 
         /**
+         * 	If after getting the model, you expand or collapse a group, call this method to inform the grid.
+         * 	It will work out the final set of 'to be displayed' rows again (ie expand or collapse the group visually).
          * @function
          * */
-        addRenderedRowListener = (event, rowIndex, callback) => {
-            this.afterGridReady(this.gridParamsFunctionSelector('addRenderedRowListener'), event, rowIndex, callback)
+        onGroupExpandedOrCollapsed = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('onGroupExpandedOrCollapsed'))
         }
 
         /**
+         * Recomputes the aggregates in the model and refreshes all the group rows.
+         * @function
+         * */
+        recomputeAggregates = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('recomputeAggregates'))
+        }
+
+        /**
+         * Returns the focused cell as an object containing the rowIndex, column and floating (top, bottom or null).
+         * @function
+         * */
+        getFocusedCell = () => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('getFocusedCell'))
+        }
+
+        /**
+         * Sets the focus to the specified cell. Set floating to null, 'top', or 'bottom'.
+         * @function
+         * */
+        setFocusedCell = (rowIndex, colKey, floating) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('setFocusedCell'), rowIndex, colKey, floating)
+        }
+
+        /**
+         * Clears the focused cell.
+         * @function
+         * */
+        clearFocusedCell = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('clearFocusedCell'))
+        }
+
+        /**
+         * Navigates the grid focus to the next cell, as if tabbing.
+         * @function
+         * */
+        tabToNextCell = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('tabToNextCell'))
+        }
+
+        /**
+         * Navigates the grid focus to the previous cell, as if shift-tabbing.
+         * @function
+         * */
+        tabToPreviousCell = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('tabToPreviousCell'))
+        }
+        /* Groups end */
+
+        /* Editing start */
+        /**
+         * 	If a cell is editing, it stops the editing.
+         * 	Pass 'true' if you want to cancel the editing (ie don't accept changes).
+         * 	Default is true.
+         * @function
+         * */
+        stopEditing = (cancel = true) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('stopEditing'), cancel)
+        }
+
+        /**
+         * Gets the grid to start editing on a particular cell.
+         * @function
+         * */
+        startEditingCell = params => {
+            this.afterGridReady(this.gridParamsFunctionSelector('startEditingCell'), params)
+        }
+        /* Editing end */
+
+        /* Export start */
+        /**
+         * Does a CSV export of the grid's data.
+         * @function
+         * */
+        exportDataAsCsv = (params = this.state.gridParams) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('exportDataAsCsv'), params)
+        }
+
+        /**
+         * Similar to exportDataAsCsv, except returns result as a string rather than export it.
+         * @function
+         * */
+        getDataAsCsv = (params = this.state.gridParams) => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('getDataAsCsv'), params)
+        }
+
+        /**
+         * Does a Excel export of the grid's data.
+         * @function
+         * */
+        exportDataAsExcel = (params = this.state.gridParams) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('exportDataAsExcel'), params)
+        }
+
+        /**
+         * Similar to exportDataAsExcel, except returns result as a string rather than export it.
+         * @function
+         * */
+        getDataAsExcel = (params = this.state.gridParams) => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('getDataAsExcel'), params)
+        }
+        /* Export end */
+
+        /* Events start */
+        /**
+         * Add an event listener for the said event type. Works similar to addEventListener for a browser DOM element.
+         * @function
+         * */
+        addEventListener = (eventType, listener) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('addEventListener'), eventType, listener)
+        }
+
+        /**
+         * Add an event listener for all event types coming from the grid.
+         * @function
+         * */
+        addGlobalListener = listener => {
+            this.afterGridReady(this.gridParamsFunctionSelector('addGlobalListener'), listener)
+        }
+
+        /**
+         * Remove an event listener.
+         * @function
+         * */
+        removeEventListener = (eventType, listener) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('removeEventListener'), eventType, listener)
+        }
+
+        /**
+         * Remove a global event listener.
+         * @function
+         * */
+        removeGlobalListener = listener => {
+            this.afterGridReady(this.gridParamsFunctionSelector('removeGlobalListener'), listener)
+        }
+
+        /**
+         * Dispatch an event through the grid.
+         * Useful if you are doing a custom cellRenderer and want to fire events such as 'cellValueChanged'.
+         * @function
+         * */
+        dispatchEvent = (eventType, event) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('dispatchEvent'), eventType, event)
+        }
+        /* Events end */
+
+        /* Rendering start */
+        /**
+         * Retrieve rendered nodes.
+         * Due to virtualisation this will contain only the current visible rows and the amount in the buffer.
          * @function
          * */
         getRenderedNodes = () => {
             return this.afterGridReady(this.gridParamsFunctionSelector('getRenderedNodes'))
         }
+        /* Rendering end */
 
+        /* Scrolling start */
         /**
-         * @function
-         * */
-        showLoadingOverlay = () => {
-            return this.afterGridReady(this.gridParamsFunctionSelector('showLoadingOverlay'))
-        }
-
-        /**
-         * @function
-         * */
-        showNoRowsOverlay = () => {
-            return this.afterGridReady(this.gridParamsFunctionSelector('showNoRowsOverlay'))
-        }
-
-        /**
-         * @function
-         * */
-        hideOverlay = () => {
-            return this.afterGridReady(this.gridParamsFunctionSelector('hideOverlay'))
-        }
-
-        /**
-         * @function
-         * */
-        recomputeAggregates = () => {
-            return this.afterGridReady(this.gridParamsFunctionSelector('recomputeAggregates'))
-        }
-
-        /**
+         * Ensures the index is visible, scrolling the table if needed.
          * @function
          * */
         ensureIndexVisible = index => {
@@ -559,13 +681,54 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         }
 
         /**
+         * Ensures the column is visible, scrolling the table if needed.
          * @function
          * */
-        exportDataAsCsv = () => {
-            const { gridParams } = this.state
-
-            this.afterGridReady(this.gridParamsFunctionSelector('exportDataAsCsv'), gridParams)
+        ensureColumnVisible = colId => {
+            this.afterGridReady(this.gridParamsFunctionSelector('ensureColumnVisible'), colId)
         }
+
+        /**
+         * Ensures a node is visible, scrolling the table if needed. Provide one of a) the node b) the data object c)
+         * a comparator function (that takes the node as a parameter, and returns true for match, false for no match)
+         * @function
+         * */
+        ensureNodeVisible = comparator => {
+            this.afterGridReady(this.gridParamsFunctionSelector('ensureNodeVisible'), comparator)
+        }
+        /* Scrolling end */
+
+        /* Overlay start */
+        /**
+         * @function
+         * */
+        showLoadingOverlay = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('showLoadingOverlay'))
+        }
+
+        /**
+         * @function
+         * */
+        showNoRowsOverlay = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('showNoRowsOverlay'))
+        }
+
+        /**
+         * @function
+         * */
+        hideOverlay = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('hideOverlay'))
+        }
+        /* Overlay end */
+
+        /* Miscellaneous start */
+        /**
+         * @function
+         * */
+        addRenderedRowListener = (event, rowIndex, callback) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('addRenderedRowListener'), event, rowIndex, callback)
+        }
+        /* Miscellaneous end */
 
         render() {
             const { isGridReady, gridParams } = this.state
