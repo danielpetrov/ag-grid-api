@@ -1,4 +1,4 @@
-# Ag grid Higher Order Component which gives you all the API functions from ag-grid
+# Ag grid Higher Order Component which gives you all the API functions from ag-grid plus other helper utilities
 
 [ag-grid API](https://www.ag-grid.com/javascript-grid-api/)
 

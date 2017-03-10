@@ -3,13 +3,17 @@ import { callWrapperComponentOnGridReady } from './utils'
 
 export const AgGridRetainFiltering = DecoratedComponent => {
     class AgGridRetainFiltering extends Component {
-        gridParams = {
-            api: {
-                getFilterModel: () => {},
-                setFilterModel: () => {}
+        constructor() {
+            super()
+
+            this.gridParams = {
+                api: {
+                    getFilterModel: () => {},
+                    setFilterModel: () => {}
+                }
             }
+            this.filterOptions = {}
         }
-        filterOptions = {}
 
         onGridReady = params => {
             this.gridParams = params

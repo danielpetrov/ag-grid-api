@@ -1,19 +1,17 @@
 import React, { PureComponent as Component, PropTypes } from 'react'
-import { callWrapperComponentOnGridReady, warnThatAgGridHasNotLoadedYet } from './utils'
+import { callWrapperComponentOnGridReady } from './utils'
 
-const DEFAULT_OPTIONS = {
-    log: false
-}
-
-export const AgGridRetainSorting = (DecoratedComponent, options) => {
+export const AgGridRetainSorting = DecoratedComponent => {
     class AgGridRetainSorting extends Component {
-        gridParams = {
-            api: {
-                getSortModel: () => {},
-                setSortModel: () => {}
+        constructor() {
+            this.gridParams = {
+                api: {
+                    getSortModel: () => {},
+                    setSortModel: () => {}
+                }
             }
+            this.sortOptions = {}
         }
-        sortOptions = {}
 
         onGridReady = params => {
             this.gridParams = params

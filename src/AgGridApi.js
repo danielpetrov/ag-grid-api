@@ -13,6 +13,8 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         constructor() {
             super()
 
+            this.agGridPassedDownFunctionsMemoized = false
+            this.agGridApiFunctionsPassedDown = {}
             this.state = {
                 gridParams: {
                     api: {}
@@ -205,10 +207,11 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
             return this.afterGridReady(this.gridParamsFunctionSelector('recomputeAggregates'))
         }
 
-
         ensureIndexVisible = index => {
             this.afterGridReady(this.gridParamsFunctionSelector('ensureIndexVisible'), index)
         }
+
+
 
         exportDataAsCsv = () => {
             const { gridParams } = this.state
@@ -218,17 +221,21 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
 
         render() {
             const { isGridReady, gridParams } = this.state
-            const agGridApiFunctionPassedDown = options.apiFunctions.reduce((acc, value) => {
-                acc[value] = this[value]
 
-                return acc
-            }, {})
+            if (!this.agGridPassedDownFunctionsMemoized) {
+                this.agGridApiFunctionsPassedDown = options.apiFunctions.reduce((acc, value) => {
+                    acc[value] = this[value]
+
+                    return acc
+                }, {})
+            }
+
             let decoratedComponentProps
             const agGridApiProps = {
                 isGridReady,
                 gridParams,
                 onGridReady: this.onGridReady,
-                agGridApiFunctionPassedDown
+                agGridApiFunctionPassedDown: this.agGridApiFunctionsPassedDown
             }
 
             if (options.flatten) {
