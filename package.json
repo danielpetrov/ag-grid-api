@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "rm -rf dist",
-    "build": "babel --copy-files --out-dir dist src"
+    "build": "babel --copy-files --out-dir dist src",
+    "generate-docs": "jsdoc -c jsdoc-config.json --debug"
   },
   "repository": {
     "type": "git",
@@ -40,10 +41,11 @@
     "babel-core": "^6.17.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-1": "^6.16.0"
+    "babel-preset-stage-1": "^6.16.0",
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.4.3"
   },
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^15.4.2"
   }
 }
