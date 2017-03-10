@@ -2,6 +2,8 @@
 
 [ag-grid API](https://www.ag-grid.com/javascript-grid-api/)
 
+## AgGridApi
+
 ### How To Use
 ````
 By default AgGridApi-HOC will pass props to your wrapped Component for all the api functions,
@@ -19,12 +21,16 @@ to call an api functions if the grid is not ready.
 ### Ag grid options
 ````
 As a second parameter AgGridApi-HOC expects an options object which contains three properties.
-1. log - Boolean. If true will log on console in some cases (default is false)
+1. log - Boolean. If true will allow logging on console in case of error or warning (default is false)
 2. flatten - Boolean. If false will pass all agGridApi as separate props. If true will pass an agGridApi prop
-of type object which will contain all the props. (default is true)
+of type object which will contain all the ag-grid-api props. (default is true)
 3. apiFunctions - Array of strings. AgGridApi-HOC will pass down only the listed agGridApiFunctions. (default are all functions)
 ````
 
 ````
 Code sample...
 ````
+
+## AgGridRetainFiltering
+
+## AgGridRetainSorting

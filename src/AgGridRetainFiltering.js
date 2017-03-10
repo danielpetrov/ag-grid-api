@@ -1,48 +1,33 @@
 import React, { PureComponent as Component, PropTypes } from 'react'
+import { callWrapperComponentOnGridReady } from './utils'
 
 export const AgGridRetainFiltering = DecoratedComponent => {
     class AgGridRetainFiltering extends Component {
-        constructor() {
-            super()
-
-            this.state = {}
-            this.state.gridParams = {}
-            this.state.isGridReady = false
+        gridParams = {
+            api: {
+                getFilterModel: () => {},
+                setFilterModel: () => {}
+            }
         }
-
-        setColumnFilterOptions = filterOptions => {
-            this.api.setFilterModel(filterOptions)
-        }
+        filterOptions = {}
 
         onGridReady = params => {
-            this.setState({
-                isGridReady: true,
-                gridParams: params
-            })
-
-            let filterOptions = {}
+            this.gridParams = params
 
             params.api.addEventListener('filterChanged', () => {
-                filterOptions = params.api.getFilterModel()
+                this.filterOptions = this.gridParams.api.getFilterModel()
             })
-
             params.api.addEventListener('newColumnsLoaded', () => {
-                this.setColumnFilterOptions(filterOptions)
+                this.gridParams.api.setFilterModel(this.filterOptions)
             })
 
-            if (this.props.onGridReady) {
-                this.props.onGridReady(params)
-            }
+            callWrapperComponentOnGridReady({ props: this.props, params })
         }
 
         render() {
-            const { isGridReady, gridParams } = this.state
-
             return (
                 <DecoratedComponent
                     {...this.props}
-                    isGridReady={isGridReady}
-                    gridParams={gridParams}
                     onGridReady={this.onGridReady}
                 />
             )
@@ -50,7 +35,8 @@ export const AgGridRetainFiltering = DecoratedComponent => {
     }
 
     AgGridRetainFiltering.propTypes = {
-        onGridReady: PropTypes.func
+        onGridReady: PropTypes.func,
+        agGridApiProps: PropTypes.object
     }
 
     AgGridRetainFiltering.displayName = `AgGridRetainFiltering(${DecoratedComponent.displayName})`

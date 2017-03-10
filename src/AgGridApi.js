@@ -1,5 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { ALL_AG_GRID_API_FUNCTIONS } from './constants'
+import { callWrapperComponentOnGridReady, warnThatAgGridHasNotLoadedYet } from './utils'
 
 const DEFAULT_OPTIONS = {
     log: false,
@@ -12,10 +13,12 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         constructor() {
             super()
 
-            this.state = {}
-            this.state.gridParams = {}
-            this.state.gridParams.api = {}
-            this.state.isGridReady = false
+            this.state = {
+                gridParams: {
+                    api: {}
+                },
+                isGridReady: false
+            }
         }
 
         afterGridReady = () => {
@@ -26,7 +29,7 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
             if (isGridReady) {
                return callback.call(gridParams.api, ...options)
             } else if (options.log) {
-                console.warn('Ag grid has not loaded yet')
+                warnThatAgGridHasNotLoadedYet()
 
                 return null
             }
@@ -41,6 +44,8 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
                 isGridReady: true,
                 gridParams: params
             })
+
+            callWrapperComponentOnGridReady({ props: this.props, params })
         }
 
         setRowData = rows => {
@@ -174,6 +179,35 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
 
         isAnyFilterPresent = () => {
             return this.afterGridReady(this.gridParamsFunctionSelector('isAnyFilterPresent'))
+        }
+
+        addRenderedRowListener = (event, rowIndex, callback) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('addRenderedRowListener'), event, rowIndex, callback)
+        }
+
+        getRenderedNodes = () => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('getRenderedNodes'))
+        }
+
+        showLoadingOverlay = () => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('showLoadingOverlay'))
+        }
+
+        showNoRowsOverlay = () => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('showNoRowsOverlay'))
+        }
+
+        hideOverlay = () => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('hideOverlay'))
+        }
+
+        recomputeAggregates = () => {
+            return this.afterGridReady(this.gridParamsFunctionSelector('recomputeAggregates'))
+        }
+
+
+        ensureIndexVisible = index => {
+            this.afterGridReady(this.gridParamsFunctionSelector('ensureIndexVisible'), index)
         }
 
         exportDataAsCsv = () => {
