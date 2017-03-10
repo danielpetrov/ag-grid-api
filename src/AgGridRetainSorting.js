@@ -1,4 +1,4 @@
-import React, { PureComponent as Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { callWrapperComponentOnGridReady } from './utils'
 
 export const AgGridRetainSorting = DecoratedComponent => {
