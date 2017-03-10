@@ -1,7 +1,7 @@
 export const callWrapperComponentOnGridReady = ({ props, params }) => {
     if (props.onGridReady != null) {
         props.onGridReady(params)
-    } else if (props.agGridApiProps.onGridReady != null) {
+    } else if (props.agGridApiProps != null && props.agGridApiProps.onGridReady != null) {
         props.agGridApiProps.onGridReady(params)
     }
 }
