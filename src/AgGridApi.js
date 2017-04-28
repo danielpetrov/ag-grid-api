@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { ALL_AG_GRID_API_FUNCTIONS } from './constants'
 import { callWrapperComponentOnGridReady, warnThatAgGridHasNotLoadedYet } from './utils'
 
@@ -40,8 +40,6 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
                return callback.call(gridParams.api, ...options)
             } else if (options.log) {
                 warnThatAgGridHasNotLoadedYet()
-
-                return null
             }
         }
 
@@ -766,11 +764,6 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
                 />
             )
         }
-    }
-
-    AgGridApi.propTypes = {
-        onGridReady: PropTypes.func,
-        agGridApiProps: PropTypes.object
     }
 
     AgGridApi.displayName = `AgGridApi(${DecoratedComponent.displayName})`

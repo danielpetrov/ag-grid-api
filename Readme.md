@@ -33,4 +33,19 @@ Code sample...
 
 ## AgGridRetainFiltering
 
+Retains filtering of the wrapped component, whenever new data or columns are loaded
+You can pass an options object to retain filtering only on columns or on data. Both fields are true by default:
+{
+    newColumns: boolean,
+    newData: boolean
+}
+
+
 ## AgGridRetainSorting
+
+Retains sorting of the wrapped component, whenever new data or columns are loaded
+You can pass an options object to retain filtering only on columns or on data. Both fields are true by default:
+{
+    newColumns: boolean,
+    newData: boolean
+}

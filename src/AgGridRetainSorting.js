@@ -1,29 +1,36 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { callWrapperComponentOnGridReady } from './utils'
 
-export const AgGridRetainSorting = DecoratedComponent => {
+const DEFAULT_OPTIONS = {
+    retainOnNewData: true,
+    retainOnNewColumns: true
+}
+
+export const AgGridRetainSorting = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
     class AgGridRetainSorting extends Component {
         constructor() {
             super ()
 
-            this.gridParams = {
-                api: {
-                    getSortModel: () => {},
-                    setSortModel: () => {}
-                }
-            }
             this.sortOptions = {}
         }
 
         onGridReady = params => {
-            this.gridParams = params
+            if (options.retainOnNewData || options.retainOnNewColumns) {
+                params.api.addEventListener('sortChanged', () => {
+                    this.sortOptions = params.api.getSortModel()
+                })
+            }
 
-            params.api.addEventListener('sortChanged', () => {
-                this.sortOptions = this.gridParams.api.getSortModel()
-            })
-            params.api.addEventListener('newColumnsLoaded', () => {
-                this.gridParams.api.setSortModel(this.sortOptions)
-            })
+            if (options.retainOnNewData) {
+                params.api.addEventListener('componentStateChanged', () => {
+                    params.api.setSortModel(this.sortOptions)
+                })
+            }
+            if (options.retainOnNewColumns) {
+                params.api.addEventListener('newColumnsLoaded', () => {
+                    params.api.setSortModel(this.sortOptions)
+                })
+            }
 
             callWrapperComponentOnGridReady({ props: this.props, params })
         }
@@ -36,11 +43,6 @@ export const AgGridRetainSorting = DecoratedComponent => {
                 />
             )
         }
-    }
-
-    AgGridRetainSorting.propTypes = {
-        onGridReady: PropTypes.func,
-        agGridApiProps: PropTypes.object
     }
 
     AgGridRetainSorting.displayName = `AgGridRetainSorting(${DecoratedComponent.displayName})`
