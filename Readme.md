@@ -1,5 +1,4 @@
-Ag-Grid-React Higher Order Components, which will make your life easier
-------------------------------------------------------------------------
+#Ag-Grid-React Higher Order Components, which will make your life easier
 
 
 
@@ -37,19 +36,28 @@ Code sample...
 
 ## AgGridRetainFiltering
 
-Retains filtering of the wrapped component, whenever new data or columns are loaded
-You can pass an options object to retain filtering only on columns or on data. Both fields are true by default:
-{
-    newColumns: boolean,
-    newData: boolean
-}
+  Automatically retains filtering for the AgGridReact component that you've passed onGridReady callback, coming from the HOC
+  
+### How To Use
 
-
+  Options:
+  As a second parameter AgGridApi you can pass an object from which the HOC can read two properties.
+   * newColumns: boolean ( true if you want to retain filtering when new columns come to the grid )
+   * newData: boolean ( true if you want to retain filtering when new data come to the grid )
+  
+  Both fields are true by default. This means that filtering will retain for both when new columns and new data comes to
+  the grid.
+  
 ## AgGridRetainSorting
 
-Retains sorting of the wrapped component, whenever new data or columns are loaded
-You can pass an options object to retain filtering only on columns or on data. Both fields are true by default:
-{
-    newColumns: boolean,
-    newData: boolean
-}
+  Automatically retains sorting for the AgGridReact component that you've passed onGridReady callback, coming from the HOC
+  
+### How To Use
+
+  Options:
+  As a second parameter AgGridApi you can pass an object from which the HOC can read two properties.
+   * newColumns: boolean ( true if you want to retain filtering when new columns come to the grid )
+   * newData: boolean ( true if you want to retain filtering when new data come to the grid )
+  
+  Both fields are true by default. This means that sorting will retain for both when new columns and new data comes to
+  the grid.
