@@ -1,31 +1,35 @@
-# Ag grid Higher Order Component which gives you all the API functions from ag-grid plus other helper utilities
+Ag-Grid-React Higher Order Components, which will make your life easier
+------------------------------------------------------------------------
 
-[ag-grid API](https://www.ag-grid.com/javascript-grid-api/)
 
-## AgGridApi
+
+## AgGridApi 
+
+  Pass all the [Ag-Grid api](https://www.ag-grid.com/javascript-grid-api/) functions to your wrapped component as props
+or choose just a few, which you will use.
 
 ### How To Use
-````
-By default AgGridApi-HOC will pass props to your wrapped Component for all the api functions,
-plus isGridReady property (api.params.isGridReady) and gridParams (api.params) property and also onGridReady callback
-which you should pass down to AgGridReact component in order to use the other functions.
-````
-````
-To use it first you have to pass down the onGridReady callback to AgGridReact component provided from ag-grid-react.
+
+  Passed down callbacks will work for the AgGridReact component that you've passed onGridReady callback, coming from the HOC.
+ 
+  AgGridApi will pas to your wrapped component:
+  * onGridReady - callback that fires when grid is ready.
+    You should pass that one to the AgGridReact that you wish to manage with the AgGridApi HOC.
+  * isGridReady - boolean which will be true if the grid has initialised.
+  * *callbacks - by default AgGridApi will pass all the callbacks from [Ag-Grid api](https://www.ag-grid.com/javascript-grid-api/)
+  
+  Options:
+    As a second parameter AgGridApi you can pass an object from which the HOC can read three properties.
+  * log - Boolean. If true will allow logging on console in case of error or warning (default is false)
+  * flatten - Boolean. If false will pass all agGridApi as separate props. If true will pass an agGridApi prop
+  of type object which will contain all the ag-grid-api props. (default is true)
+  * apiFunctions - Array of strings. AgGridApi-HOC will pass down only the listed agGridApiFunctions.
+  (default are all functions)
+    
 Each of the api functions won't be executed if grid api is not ready. Nothing will happen and there will be silent error.
 You can change that from options, setting log property to true. Then you will get error message in the console if you are trying
 to call an api functions if the grid is not ready.
-````
 
-
-### Ag grid options
-````
-As a second parameter AgGridApi-HOC expects an options object which contains three properties.
-1. log - Boolean. If true will allow logging on console in case of error or warning (default is false)
-2. flatten - Boolean. If false will pass all agGridApi as separate props. If true will pass an agGridApi prop
-of type object which will contain all the ag-grid-api props. (default is true)
-3. apiFunctions - Array of strings. AgGridApi-HOC will pass down only the listed agGridApiFunctions. (default are all functions)
-````
 
 ````
 Code sample...
