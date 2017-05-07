@@ -694,11 +694,21 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
         ensureNodeVisible = comparator => {
             this.afterGridReady(this.gridParamsFunctionSelector('ensureNodeVisible'), comparator)
         }
+
+        /**
+         * Returns a JSON object with two properties:
+         *  top: The top pixel position of the current scroll in the grid
+         *  bottom: The bottom pixel position of the current scroll in the grid
+         */
+        getVerticalPixelRange = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('getVerticalPixelRange'))
+        }
         /* Scrolling end */
 
         /* Overlay start */
         /**
          * @function
+         * Show the loading overlay.
          * */
         showLoadingOverlay = () => {
             this.afterGridReady(this.gridParamsFunctionSelector('showLoadingOverlay'))
@@ -706,6 +716,7 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
 
         /**
          * @function
+         * Show the 'no rows' overlay.
          * */
         showNoRowsOverlay = () => {
             this.afterGridReady(this.gridParamsFunctionSelector('showNoRowsOverlay'))
@@ -713,18 +724,284 @@ export const AgGridApi = (DecoratedComponent, options = DEFAULT_OPTIONS) => {
 
         /**
          * @function
+         * Hides the overlay if showing.
          * */
         hideOverlay = () => {
             this.afterGridReady(this.gridParamsFunctionSelector('hideOverlay'))
         }
         /* Overlay end */
 
+        /* Clipboard start */
+        /**
+         * @function
+         * Copies the selected ranges to the clipboard.
+         * */
+        copySelectedRangeToClipboard = includeHeaders => {
+            this.afterGridReady(this.gridParamsFunctionSelector('copySelectedRangeToClipboard'), includeHeaders)
+        }
+
+        /**
+         * @function
+         * Copies the selected range down, similar to Ctrl+D in Excel.
+         * */
+        copySelectedRangeDown = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('copySelectedRangeDown'))
+        }
+        /* Clipboard end */
+
+        /* Pagination start */
+        /**
+         * @function
+         * Returns true when last page known.
+         * This will always be true if you are using the in memory row model for pagination.
+         * Returns false when last page now known. This only happens when using infinite scrolling row model.
+         * */
+        paginationIsLastPageFound = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationIsLastPageFound'))
+        }
+
+        /**
+         * @function
+         * How many rows ag-Grid is showing per page.
+         * */
+        paginationGetPageSize = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGetPageSize'))
+        }
+
+
+        /**
+         * @function
+         * Sets the paginationPageSize to newPageSize
+         * Then it repaginates the grid so the changes are applied immediately on the screen.
+         * */
+        paginationSetPageSize = newPageSize => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationSetPageSize'), newPageSize)
+        }
+
+
+        /**
+         * @function
+         * Returns the 0 index based page which ag-Grid is showing right now.
+         * */
+        paginationGetCurrentPage = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGetCurrentPage'))
+        }
+
+
+        /**
+         * @function
+         * Returns the total number of pages. If paginationIsLastPageFound() == false returns null.
+         * */
+        paginationGetTotalPages = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGetTotalPages'))
+        }
+
+
+        /**
+         * @function
+         * Shorthands for goToPage(relevantPageNumber).
+         * Goes to the specified page. If the page requested doesn't exist, it will go to the last page.
+         * */
+        paginationGoToPage = pageNumber => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGoToPage'), pageNumber)
+        }
+
+
+        /**
+         * @function
+         * Shorthands for goToPage(relevantPageNumber).
+         * */
+        paginationGoToNextPage = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGoToNextPage'))
+        }
+
+
+        /**
+         * @function
+         * Shorthands for goToPage(relevantPageNumber).
+         * */
+        paginationGoToPreviousPage = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGoToPreviousPage'))
+        }
+
+
+        /**
+         * @function
+         * Shorthands for goToPage(relevantPageNumber).
+         * */
+        paginationGoToFirstPage = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGoToFirstPage'))
+        }
+
+
+        /**
+         * @function
+         * Shorthands for goToPage(relevantPageNumber).
+         * */
+        paginationGoToLastPage = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('paginationGoToLastPage'))
+        }
+        /* Pagination end */
+
         /* Miscellaneous start */
         /**
          * @function
+         * Registers a callback to a rendered row. A rendered row is a row that is visually rendered on the screen
+         * (rows that are not visible because of the scroll position are not rendered).
+         * Unlike normal events, you do not need to unregister rendered row listeners.
+         * When the rendered row is removed from the grid, all associated rendered row listeners will also be removed.
+         * Currently only one event: 'renderedRowRemoved' - listen for this event if your cellRenderer needs to do
+         * clean down after the row no longer exists.
          * */
         addRenderedRowListener = (event, rowIndex, callback) => {
             this.afterGridReady(this.gridParamsFunctionSelector('addRenderedRowListener'), event, rowIndex, callback)
+        }
+
+        /**
+         * @function
+         * Shows (or hides) the tool panel.
+         * */
+        showToolPanel = show => {
+            this.afterGridReady(this.gridParamsFunctionSelector('showToolPanel'), show)
+        }
+
+        /**
+         * @function
+         * Returns true if the tool panel is showing, otherwise false.
+         * */
+        isToolPanelShowing = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('isToolPanelShowing'))
+        }
+
+        /**
+         * @function
+         * Force the grid to lay out it's components. The grid, by default, resizes to fit the div the grid lives in.
+         * This is done
+         * a) on initialisation
+         * b) window resize and
+         * c) every 500ms. You should call this if something happens in your application where the
+         * grid size has changed and you want to lay the grid out without waiting for the next 500ms refresh.
+         * */
+        doLayout = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('doLayout'))
+        }
+
+        /**
+         * @function
+         * Gets the value for a column for a particular rowNode (row).
+         * This is useful if you want the raw value of a cell eg implementing your own csv export.
+         * */
+        getValue = (colKey, node) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('getValue'), colKey, node)
+        }
+
+        /**
+         * @function
+         * To set the header height (in pixels) after the grid has initialised.
+         * Set to null or undefined to use the default of 25px. If havling multiple rows in the header,
+         * due to column grouping, this will be the height of each row.
+         * */
+        setHeaderHeight = value => {
+            this.afterGridReady(this.gridParamsFunctionSelector('setHeaderHeight'), value)
+        }
+
+        /**
+         * @function
+         * Gets the grid to destroy and release resources. If you are using Angular (version 1 or 2) you do not need
+         * to call this, as the grid links in with the AngularJS 1.x lifecycle.
+         * However if you are using Web Components or native Javascript, you do need to call this,
+         * to avoid a memory leak in your application.
+         * */
+        destroy = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('destroy'))
+        }
+
+        /**
+         * @function
+         * Shows the column menu after and positions it relative to the provided element (button click) or mouse event.
+         * Use in conjunction with your own header template.
+         * */
+        showColumnMenuAfterButtonClick = (colKey, buttonElement) => {
+            this.afterGridReady(
+                this.gridParamsFunctionSelector('showColumnMenuAfterButtonClick'),
+                colKey,
+                buttonElement
+            )
+        }
+
+        /**
+         * @function
+         * Shows the column menu after and positions it relative to the provided element (button click) or mouse event.
+         * Use in conjunction with your own header template.
+         * */
+        showColumnMenuAfterMouseClick = (colKey, buttonElement) => {
+            this.afterGridReady(
+                this.gridParamsFunctionSelector('showColumnMenuAfterMouseClick'),
+                colKey,
+                buttonElement
+            )
+        }
+
+        /**
+         * @function
+         * Gets the grid to check it's size again. This is useful if you do not have the grid in the DOM when you
+         * create it, call this method after the grid is in the dom to get it to check it's width and height again
+         * (which decides what columns and rows to render).
+         * */
+        checkGridSize = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('checkGridSize'))
+        }
+
+        /**
+         * @function
+         * 	Gets the grid to recalculated the row heights.
+         * */
+        resetRowHeights = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('resetRowHeights'))
+        }
+
+        /**
+         * @function
+         * Tells the grid a row height has changed. To be used after calling rowNode.setRowHeight(newHeight).
+         * */
+        onRowHeightChanged = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('onRowHeightChanged'))
+        }
+        /**
+         * @function
+         * Copies the selected rows to the clipboard. Set includeHeaders = true to include the headers
+         * (default is false) set columnKeys to the list of columns if you don't want just specific columns.
+         * */
+        copySelectedRowsToClipboard = (includeHeaders, columnKeys) => {
+            this.afterGridReady(
+                this.gridParamsFunctionSelector('copySelectedRowsToClipboard'),
+                includeHeaders,
+                columnKeys
+            )
+        }
+
+        /**
+         * @function
+         * Adding and clearing of aggregation functions.
+         * */
+        addAggFunc = (key, aggFunc) => {
+            this.afterGridReady(this.gridParamsFunctionSelector('addAggFunc'), key, aggFunc)
+        }
+
+        /**
+         * @function
+         * Adding and clearing of aggregation functions.
+         * */
+        addAggFuncs = addAggFuncs => {
+            this.afterGridReady(this.gridParamsFunctionSelector('addAggFuncs'), addAggFuncs)
+        }
+
+        /**
+         * @function
+         * Adding and clearing of aggregation functions.
+         * */
+        clearAggFuncs = () => {
+            this.afterGridReady(this.gridParamsFunctionSelector('clearAggFuncs'))
         }
         /* Miscellaneous end */
 

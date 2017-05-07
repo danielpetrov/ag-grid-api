@@ -1,6 +1,6 @@
 {
   "name": "ag-grid-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Helper utility for ag-grid-react api",
   "main": "dist/index.js",
   "scripts": {
