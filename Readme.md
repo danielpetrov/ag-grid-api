@@ -1,5 +1,7 @@
 ![ag grid logo](img/logo.png)
-# Higher Order Components for AgGridReact, which will make your life easier
+
+Higher Order Components for AgGridReact, which will make your life easier
+=========================================================================
 
 ## AgGridApi 
 
