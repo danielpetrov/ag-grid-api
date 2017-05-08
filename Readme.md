@@ -10,9 +10,9 @@ or choose just a few, which you will use.
 
 ### How To Use
 
-  Passed down callbacks will work for the AgGridReact component that you've passed onGridReady callback, coming from the HOC.
+  Passed down callbacks will work for the AgGridReact component for which you pass onGridReady callback, coming from the HOC.
  
-  AgGridApi will pas to your wrapped component:
+  AgGridApi will pass to your wrapped component:
   * onGridReady - callback that fires when grid is ready.
     You should pass that one to the AgGridReact that you wish to manage with the AgGridApi HOC.
   * isGridReady - boolean which will be true if the grid has initialised.
@@ -28,7 +28,7 @@ or choose just a few, which you will use.
     
 Each of the api functions won't be executed if the wrapped AgGridReact has not initialised yet.
 If you call a callback from AgGridApi before that nothing will happen.
-You can change that from options, setting log property to true. Then you will get error message in the console if you are trying
+You can change that from options, setting log property to true. Then you will get a warn message in the console if you are trying
 to call an api functions if the grid is not ready.
 
 
@@ -58,8 +58,8 @@ Code sample...
 
   Options:
   As a second parameter to AgGridApi you can pass an object from which the HOC can read two properties.
-   * newColumns: Boolean ( true if you want to retain filtering when new columns come to the grid )
-   * newData: Boolean ( true if you want to retain filtering when new data come to the grid )
+   * newColumns: Boolean ( true if you want to retain sorting when new columns come to the grid )
+   * newData: Boolean ( true if you want to retain sorting when new data come to the grid )
   
   Both fields are true by default. This means that sorting will retain for both when new columns and new data comes to
   the grid.
